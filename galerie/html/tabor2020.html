@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tábor 2020 - Narnie | Moderní galerie</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Moderní CSS proměnné */
+        :root {
+            --primary: #1a3c27;
+            --primary-light: #2d5a3b;
+            --primary-dark: #0f2618;
+            --accent: #e9b949;
+            --accent-light: #f5d37c;
+            --light: #f8faf7;
+            --light-gray: #e8efe6;
+            --dark: #1e2a22;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Reset a základní styly */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Moderní header s gradientem */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: var(--white);
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            background-size: cover;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .logo:hover {
+            transform: rotate(10deg) scale(1.05);
+        }
+
+        .logo img {
+            width: 70%;
+            height: auto;
+        }
+
+        .header-title {
+            text-align: center;
+        }
+
+        .header-title h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .header-title .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        /* Navigace */
+        .back-link {
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+
+        .back-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+
+        .back-link a:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: var(--accent);
+            color: var(--primary-dark);
+        }
+
+        /* Moderní galerie */
+        .gallery-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: var(--primary-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Samostatný filtr */
+        .gallery-filters {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .filters-container {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .filters-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            height: 260px;
+            position: relative;
+            background: var(--primary-light);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: var(--white);
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .item-overlay {
+            transform: translateY(0);
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-date {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Popis sekce - posunuta dolů */
+        .description {
+            max-width: 1000px;
+            margin: 5rem auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .description-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border-top: 4px solid var(--accent);
+            transition: var(--transition);
+        }
+
+        .description-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .description h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .description h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .description p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: var(--radius-md);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: var(--white);
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lightbox-close:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: var(--transition);
+            z-index: 1001;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-prev {
+            left: 30px;
+        }
+
+        .lightbox-next {
+            right: 30px;
+        }
+
+        .image-counter {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--white);
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        .image-title {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--white);
+            font-size: 1.3rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            max-width: 80%;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo-img {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-img img {
+            width: 60%;
+            height: auto;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .footer-logo-text span {
+            color: var(--accent);
+        }
+
+        .footer-about p {
+            opacity: 0.85;
+            margin-top: 1rem;
+            line-height: 1.7;
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h3::after, .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-item i {
+            color: var(--accent);
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        /* Responzivita */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .header-title h1 {
+                font-size: 2.2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+            
+            .lightbox-nav {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
+            .lightbox-prev {
+                left: 15px;
+            }
+            
+            .lightbox-next {
+                right: 15px;
+            }
+            
+            .lightbox-close {
+                top: 20px;
+                right: 20px;
+            }
+            
+            .description-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-content {
+                padding: 0 1.5rem;
+            }
+            
+            .header-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .filter-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .filter-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="../images/logo.png" alt="Logo tábora Narnie">
+            </div>
+            <div class="header-title">
+                <h1>Tábor 2020 – Narnie</h1>
+                <div class="subtitle">Kouzelná říše za dvířky skříně</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigace -->
+    <div class="back-link">
+        <a href="../../index.html#gallery">
+            <i class="fas fa-arrow-left"></i>
+            <span>Zpět na přehled táborů</span>
+        </a>
+    </div>
+
+    <!-- Galerie -->
+    <section class="gallery-section">
+        <div class="section-header">
+            <h2>Fotogalerie</h2>
+            <p>Prohlédněte si vzpomínky z našeho dobrodružství v Narnii</p>
+        </div>
+        
+        <!-- Samostatný filtr -->
+        <div class="gallery-filters">
+            <div class="filters-container">
+                <div class="filters-title">Filtrovat fotky:</div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Všechny</button>
+                    <button class="filter-btn" data-filter="nature">Příroda</button>
+                    <button class="filter-btn" data-filter="activities">Aktivity</button>
+                    <button class="filter-btn" data-filter="group">Skupinové</button>
+                    <button class="filter-btn" data-filter="camp">Táborový život</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gallery-grid">
+            <!-- Ručně zadaný obrázek zůstává -->
+            <div class="gallery-item" data-category="activities">
+                <img src="../images/tabor2020/3387.jpg" alt="Dobrodružství v Narnii">
+                <div class="item-overlay">
+                    <div class="item-title">Dobrodružství v Narnii</div>
+                    <div class="item-date">Červenec 2020</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popis - posunutý dolů -->
+    <div class="description">
+        <div class="description-card">
+            <h2>O táboře Narnie</h2>
+            <p>Letošní tábor nás zavedl za kouzelná dvířka skříně – do říše <span class="highlight">Narnie</span>. Stali jsme se součástí odboje proti Bílé čarodějnici a prožili dobrodružství po boku Aslana a dalších hrdinů.</p>
+            <p>Každý den jsme objevovali nová tajemství, učili se odvaze, přátelství a důvěře. Od výprav do zimních lesů přes stavění táborů faunů až po epickou bitvu o Narnii – to vše vytvořilo pohádkovou atmosféru našeho tábora.</p>
+            <p>Děti se během tábora naučily spolupracovat v týmu, překonávat překážky a rozvíjet svou fantazii. Každý večer jsme si společně vyprávěli příběhy z Narnie a plánovali další dobrodružství.</p>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img class="lightbox-img" src="" alt="Lightbox image">
+            <div class="image-title"></div>
+            <div class="image-counter"></div>
+        </div>
+        <span class="lightbox-nav lightbox-prev">&#10094;</span>
+        <span class="lightbox-nav lightbox-next">&#10095;</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="footer-logo-container">
+                    <div class="footer-logo-img">
+                        <img src="../images/logo.png" alt="Logo tábora Narnie">
+                    </div>
+                    <div class="footer-logo-text">Tábor<span>Narnie</span></div>
+                </div>
+                <div class="footer-about">
+                    <p>Letní tábor pro děti plný dobrodružství, přátelství a nezapomenutelných zážitků v kouzelné říši Narnie.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Rychlé odkazy</h3>
+                <ul>
+                    <li><a href="../../index.html"><i class="fas fa-home"></i> Domů</a></li>
+                    <li><a href="../../index.html#about"><i class="fas fa-info-circle"></i> O táboře</a></li>
+                    <li><a href="../../index.html#gallery"><i class="fas fa-images"></i> Galerie</a></li>
+                    <li><a href="../../index.html#contact"><i class="fas fa-envelope"></i> Kontakt</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3>Kontaktní informace</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Fara Sobotín, Jeseníky</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>20. - 26. července 2020</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-users"></i>
+                        <span>29 účastníků</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+420 123 456 789</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2020 Tábor Narnie | Vytvořeno s láskou pro nezapomenutelné zážitky</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generování galerie
+            const gallery = document.querySelector('.gallery-grid');
+            const startNumber = 3388;
+            const endNumber = 3415;
+            
+            // Kategorie pro filtry
+            const categories = ['nature', 'activities', 'group', 'activities', 'nature', 'group', 
+                               'activities', 'group', 'nature', 'activities', 'group', 'nature',
+                               'activities', 'camp', 'nature', 'activities', 'camp', 'nature'];
+            
+            let categoryIndex = 0;
+            
+            for (let i = startNumber; i <= endNumber; i++) {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.setAttribute('data-category', categories[categoryIndex % categories.length]);
+                div.innerHTML = `
+                    <img src="../images/tabor2020/${i}.jpg" alt="Tábor Narnie ${i}">
+                    <div class="item-overlay">
+                        <div class="item-title">Tábor Narnie ${i}</div>
+                        <div class="item-date">Červenec 2020</div>
+                    </div>
+                `;
+                gallery.appendChild(div);
+                categoryIndex++;
+            }
+            
+            // Scroll animace
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Pozorování galerie a popisu
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const descriptionCard = document.querySelector('.description-card');
+            
+            galleryItems.forEach(item => {
+                observer.observe(item);
+            });
+            
+            if (descriptionCard) {
+                observer.observe(descriptionCard);
+            }
+            
+            // Filtrování galerie
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Odstranit aktivní třídu ze všech tlačítek
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Přidat aktivní třídu na kliknuté tlačítko
+                    button.classList.add('active');
+                    
+                    const filterValue = button.getAttribute('data-filter');
+                    
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                            // Přidat animaci pro zobrazení
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                            }, 50);
+                        } else {
+                            item.style.display = 'none';
+                            item.classList.remove('visible');
+                        }
+                    });
+                });
+            });
+            
+            // Lightbox funkce
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImg = document.querySelector('.lightbox-img');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const lightboxPrev = document.querySelector('.lightbox-prev');
+            const lightboxNext = document.querySelector('.lightbox-next');
+            const imageCounter = document.querySelector('.image-counter');
+            const imageTitle = document.querySelector('.image-title');
+            
+            let currentImageIndex = 0;
+            const images = Array.from(galleryItems).map(item => ({
+                src: item.querySelector('img').src,
+                alt: item.querySelector('img').alt,
+                title: item.querySelector('.item-title').textContent
+            }));
+            
+            // Otevření lightboxu
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    currentImageIndex = index;
+                    updateLightboxImage();
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Zavření lightboxu
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // Zavření při kliknutí mimo obrázek
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Navigace
+            lightboxPrev.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                updateLightboxImage();
+            });
+            
+            lightboxNext.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                updateLightboxImage();
+            });
+            
+            // Klávesová navigace
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                } else if (e.key === 'ArrowLeft') {
+                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                    updateLightboxImage();
+                } else if (e.key === 'ArrowRight') {
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    updateLightboxImage();
+                }
+            });
+            
+            // Aktualizace lightboxu
+            function updateLightboxImage() {
+                const currentImage = images[currentImageIndex];
+                lightboxImg.src = currentImage.src;
+                lightboxImg.alt = currentImage.alt;
+                imageTitle.textContent = currentImage.title;
+                imageCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+            }
+        });
+    </script>
+</body>
+</html>

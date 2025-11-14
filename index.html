@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farní Tábor Nová Hradečná</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <style>
+        /* Základní styly */
+        :root {
+            --primary: #2c5530;
+            --primary-dark: #1e3a23;
+            --primary-light: #4a7c59;
+            --secondary: #f8b500;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e6a500;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Header a navigace */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover .logo-img {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: rotate(5deg);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* Hero sekce s zoom efektem */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+  linear-gradient(rgba(0,0,0, 0.5), rgba(0,0,0, 0.4)),
+  url('img/tabor25.jpg');
+
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            animation: zoom 30s infinite alternate;
+            filter: brightness(0.7);
+        }
+
+        @keyframes zoom {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.2);
+            }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 20px;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* O táboře sekce */
+        .about {
+            background-color: var(--light);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transform: translateX(30px);
+            opacity: 0;
+            transition: all 0.8s ease 0.3s;
+        }
+
+        .about-image.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Features sekce */
+        .features {
+            background-color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--primary);
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        .feature-item.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+/* === Vylepšená timeline s tečkami === */
+.program {
+  background-color: var(--light);
+  padding: 60px 20px;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 50px;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.section-header p {
+  color: #555;
+  font-size: 1rem;
+}
+
+.program-timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 40px;
+}
+
+.program-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30px;
+  width: 2px;
+  height: 100%;
+  background: var(--primary-light);
+  opacity: 0.6;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* Tečky na časové ose */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -40px;
+  top: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  border: 3px solid white;
+  box-shadow: 0 0 0 3px var(--primary-light);
+  z-index: 2;
+}
+
+.timeline-time {
+  flex: 0 0 100px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.95rem;
+  padding-top: 5px;
+}
+
+.timeline-content {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 25px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-left: 20px;
+}
+
+.timeline-content:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.timeline-content h3 {
+  color: var(--primary);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.timeline-content p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* === Responsivita === */
+@media (max-width: 600px) {
+  .program-timeline {
+    padding-left: 30px;
+  }
+  
+  .program-timeline::before {
+    left: 20px;
+  }
+  
+  .timeline-item::before {
+    left: -30px;
+  }
+  
+  .timeline-item {
+    flex-direction: column;
+    margin-left: 20px;
+  }
+  
+  .timeline-time {
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  
+  .timeline-content {
+    margin-left: 0;
+  }
+}
+
+        /* Galerie */
+        .gallery {
+            background-color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            transform: scale(0.9);
+            opacity: 0;
+        }
+
+        .gallery-item.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Pro rodiče sekce */
+        .parents {
+            background-color: var(--light);
+        }
+
+        .parents-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .parents-info, .parents-checklist {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .parents-info.visible, .parents-checklist.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .parents-checklist ul {
+            list-style: none;
+        }
+
+        .parents-checklist li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .parents-checklist li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .dates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .date-item {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .date-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .date-item strong {
+            display: block;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        /* FAQ sekce */
+        .faq {
+            background-color: white;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .faq-item.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: var(--light);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        /* Vylepšená kontaktní sekce */
+        .contact {
+            background-color: var(--light);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transform: translateX(-30px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .contact-info.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .contact-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .contact-item h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-item h3 i {
+            margin-right: 10px;
+            color: var(--primary-light);
+            width: 24px;
+            text-align: center;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-details p {
+            margin: 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-details i {
+            margin-right: 10px;
+            color: var(--primary-light);
+            width: 18px;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transform: translateX(30px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .contact-form.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about .logo {
+            color: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-about .logo-img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 6px;
+            filter: brightness(1.2);
+        }
+
+        .footer-about .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .footer-about p {
+            color: #ccc;
+        }
+
+        .footer-links h3 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+        }
+
+        .footer-links h3:after {
+            background-color: var(--secondary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responzivita */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .program-timeline:before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+            }
+            
+            .timeline-time {
+                flex: 0 0 150px;
+            }
+            
+            .timeline-content {
+                margin-left: 30px;
+                margin-right: 0;
+            }
+            
+            .timeline-content:after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .program-timeline:before {
+                left: 20px;
+            }
+            
+            .timeline-time {
+                flex: 0 0 100px;
+                margin-right: 20px;
+            }
+            
+            .timeline-item:before {
+                left: 17px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header s navigací -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#domu" class="logo">
+                    <img src="img/logo.png" alt="Farní Tábor Nová Hradečná" class="logo-img">
+                    <span class="logo-text">Farní Tábor Nová Hradečná</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#domu">Domů</a></li>
+                    <li><a href="#o-tabore">O táboře</a></li>
+                    <li><a href="#program">Program</a></li>
+                    <li><a href="#galerie">Galerie</a></li>
+                    <li><a href="#pro-rodice">Pro rodiče</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#kontakt">Kontakt</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero sekce s zoom efektem -->
+    <section class="hero" id="domu">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>Farní Tábor Nová Hradečná 2026</h1>
+            <p>Letní dobrodružství plné víry, přátelství a zábavy pro děti a mládež v srdci Jeseníků</p>
+            <div class="hero-buttons">
+                <a href="#kontakt" class="btn">Přihlásit se</a>
+                <a href="#o-tabore" class="btn btn-secondary">Více informací</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- O táboře sekce -->
+    <section id="o-tabore" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>O táboře</h2>
+                <p>Tábor plný záhad a dobrodružství v krásném prostředí Jeseníků</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>O našem táboře</h3>
+                    <p>Farní tábor Nová Hradečná je letní akce pořádaná farností Nová Hradečná již více než 12 let. Každoročně připravujeme týden plného zábavy, her a duchovního programu pro děti ve věku 6-15 let.</p>
+                    <p>Letošní ročník s tématem "Gravity Falls" se uskuteční  <br>od 26.7. do 1.8. 2026 v areálu fary v Sobotíně.</p>
+                    <div class="hero-buttons" style="justify-content: flex-start; margin-top: 30px;">
+                        <a href="#program" class="btn">Program tábora</a>
+                        <a href="#galerie" class="btn btn-secondary">Fotogalerie</a>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="img/fara-sobotin-1.jpg" alt="Tábor v přírodě">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features sekce -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Proč jet na náš tábor</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Skupiny</h3>
+                    <p>Děti rozděleny podle věku do malých skupinek s vlastním vedoucím</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Program</h3>
+                    <p>Každodenní modlitba, mše svatá a duchovní program přizpůsobený dětem</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Příroda</h3>
+                    <p>Kouzelné prostředí Jeseníků s čistým vzduchem a krásnou přírodou</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3>Vedoucí</h3>
+                    <p>Přátelský tým zkušených vedoucích</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-smile"></i>
+
+                    </div>
+                    <h3>Zábava</h3>
+                    <p>Nechybí hry, soutěže, výlety a táboráky plné smíchu a dobrodružství</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Přátelství</h3>
+                    <p>Účastníci si odnášejí nová kamarádství a nezapomenutelné zážitky</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Program sekce - vylepšená vertikální timeline s tečkami -->
+<section id="program" class="program">
+  <div class="container">
+    <div class="section-header">
+      <h2>Program tábora</h2>
+      <p>Každý den na táboře je plný aktivit, které rozvíjejí kreativitu, fyzickou zdatnost a duchovní život dětí.</p>
+    </div>
+
+    <div class="program-timeline">
+      <div class="timeline-item">
+        <div class="timeline-time">7:10 – 7:30</div>
+        <div class="timeline-content">
+          <h3>Budíček a rozcvička</h3>
+          <p>Probuzení do nového dne s krátkou rozcvičkou.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">7:30 – 8:10</div>
+        <div class="timeline-content">
+          <h3>Ranní modlitba a snídaně</h3>
+          <p>Společná modlitba a zamyšlení nad dnešním tématem.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">8:30 – 9:30</div>
+        <div class="timeline-content">
+          <h3>Hygiena</h3>
+          <p>Krátká hygiena.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">9:30 – 12:00</div>
+        <div class="timeline-content">
+          <h3>Dopolední program a svačina</h3>
+          <p>Tématické hry, aktivity, scénky.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">12:30 – 14:30</div>
+        <div class="timeline-content">
+          <h3>Oběd a polední klid</h3>
+          <p>Bohatý oběd od našich kuchařek a volný čas.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">14:00 – 19:00</div>
+        <div class="timeline-content">
+          <h3>Odpolední aktivity a svačina</h3>
+          <p>Sportovní hry, výlety do přírody, táborové soutěže, odpočinek a četba.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">19:00 – 20:30</div>
+        <div class="timeline-content">
+          <h3>Večeře</h3>
+          <p>Společné stolování a sdílení zážitků z dne.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">20:30 – 21:30</div>
+        <div class="timeline-content">
+          <h3>Večerní program</h3>
+          <p>Večerní program, shrnutí dne, vyplnění deníčků.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">21:30 – 22:00</div>
+        <div class="timeline-content">
+          <h3>Večerní modlitba</h3>
+          <p>Poděkování za uplynulý den a modlitba na dobrou noc.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-time">22:00 – 22:15</div>
+        <div class="timeline-content">
+          <h3>Večerní hygiena a večerka</h3>
+          <p>Večerní jednoduchá hygiena.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Galerie -->
+    <section id="galerie" class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2>Fotografie z minulých ročníků</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <a href="galerie/html/tabor2025.html">
+                    <img src="img/tabor25.JPG" alt="Tábor 2025 - Já Padouch">
+                    <div class="gallery-caption">Tábor 2025 - Já Padouch</div>
+                    </a>
+                </div>
+                <div class="gallery-item">
+                    <a href="galerie/html/tabor2024.html">
+                    <img src="img/tabor24.jpg" alt="Tábor 2024 - Jumanji">
+                    <div class="gallery-caption">Tábor 2024 - Jumanji</div>
+                    </a>
+                </div>
+                <div class="gallery-item">
+                    <a href="galerie/html/tabor2023.html">
+                    <img src="img/tabor23.jpg" alt="Tábor 2023 - Cestování časem">
+                    <div class="gallery-caption">Tábor 2023 - Cestování časem</div>
+                    </a>
+                </div>
+                <div class="gallery-item">
+                    <a href="galerie/html/tabor2022.html">
+                    <img src="img/tabor22.jpg" alt="Tábor 2022 - Šmoulové">
+                    <div class="gallery-caption">Tábor 2022 - Šmoulové</div>
+                    </a>
+                </div>
+                <div class="gallery-item">
+                    <a href="galerie/html/tabor2021.html">
+                    <img src="img/tabor21.jpg" alt="Tábor 2021 - Malý princ">
+                    <div class="gallery-caption">Tábor 2021 - Malý princ</div>
+                    </a>
+                </div>
+                <div class="gallery-item">
+                    <a href="galerie/html/tabor2020.html">
+                    <img src="img/tabor2020.jpg" alt="Tábor 2020 - Narnie">
+                    <div class="gallery-caption">Tábor 2020 - Narnie</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pro rodiče -->
+    <section id="pro-rodice" class="parents">
+        <div class="container">
+            <div class="section-header">
+                <h2>Informace pro rodiče</h2>
+            </div>
+            
+            <div class="parents-content">
+                <div class="parents-info">
+                    <h3>Důležitá data</h3>
+                    <div class="dates-grid">
+                        <div class="date-item">
+                            <strong>Termín tábora</strong>
+                            <span>26.7. - 2.8.</span>
+                        </div>
+                        <div class="date-item">
+                            <strong>Přihlášky do</strong>
+                            <span>30. 5. 2026</span>
+                        </div>
+                        <div class="date-item">
+                            <strong>Příjezd na tábor</strong>
+                            <span>26.7.15:00-16:00</span>
+                        </div>
+                        <div class="date-item">
+                            <strong>Odjezd z tábora</strong>
+                            <span>2.8. 10:00-12:00</span>
+                        </div>
+                    </div>
+                    
+                    <h3>Přihlášení</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, voluptates. Soluta pariatur qui repellendus eligendi magnam consectetur tempore perspiciatis in.</p>
+                    <p><strong>Cena tábora:</strong> 2.400 Kč (pro sourozence sleva 200 Kč na každé další dítě)</p>
+                    <p><strong>Platbu prosím proveďte převodem na účet:</strong> 123456789/0100</p>
+                    
+                    <a href="#prihlasit" class="btn" style="margin-top: 20px;">Přihlásit dítě</a>
+                </div>
+                
+                <div class="parents-checklist">
+                    <h3>Co s sebou</h3>
+                    <ul>
+                        <li>Spacák a karimatka</li>
+                        <li>Oblečení na ven i dovnitř</li>
+                        <li>Pláštěnka a pevná obuv</li>
+                        <li>Hygienické potřeby</li>
+                        <li>Lahev na vodu</li>
+                        <li>Pokrývka hlavy</li>
+                        <li>Repelent a opalovací krém</li>
+                        <li>Dobrá nálada!</li>
+                    </ul>
+                    
+                    <a href="#" class="btn btn-secondary" style="margin-top: 20px;">Stáhnout seznam</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ sekce -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Často kladené otázky</h2>
+                <p>Vaše otázka nebyla zodpovězena? <a href="#kontakt">Kontaktujte nás</a>:</p>
+            </div>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Jak mohu přihlásit své dítě na tábor?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Přihlášku vyplňte online pomocí našeho přihlašovacího formuláře. Po odeslání formuláře vám zašleme potvrzení a další instrukce.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Je možné uhradit účastnický poplatek na místě?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Účastnický poplatek je nutné uhradit předem bankovním převodem na účet 123456789/0100. Na místě není možné platit.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Jak je zajištěna bezpečnost dětí na táboře?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Na táboře je vždy přítomen kvalifikovaný zdravotník, všichni vedoucí mají potřebné školení a certifikáty. Areál tábora je zabezpečen a děti jsou pod neustálým dohledem.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Co když mé dítě potřebuje zvláštní stravu (dieta, alergie)?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>V přihlášce uveďte jakékoliv speciální stravovací potřeby vašeho dítěte. Naše kuchyň se snaží vyjít vstříc všem dietním požadavkům.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Je možné navštívit dítě během tábora?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Z důvodu adaptace dětí na táborový režim a programu doporučujeme návštěvy pouze po předchozí domluvě s hlavním vedoucím.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vylepšená kontaktní sekce -->
+    <section id="kontakt" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Kontaktujte nás</h2>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3><i class="fas fa-home"></i> Ubytování</h3>
+                        <div class="contact-details">
+                            <p><i class="fas fa-map-marker-alt"></i> Fara Sobotín</p>
+                            <p><i class="fas fa-location-dot"></i> Sobotín 99</p>
+                            <p><i class="fas fa-city"></i> 788 16 Petrov nad Desnou</p>
+                            <p><i class="fas fa-user"></i> Ing. Dana Ponížilová</p>
+                            <p><i class="fas fa-phone"></i> tel. 731 626 557</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3><i class="fas fa-users"></i> Pořadatelé</h3>
+                        <div class="contact-details">
+                            <p><strong>O. Karel</strong></p>
+                            <p><i class="fas fa-phone"></i> +420 731 128 189</p>
+                            <p><i class="fas fa-envelope"></i> fanovahradecna@ado.cz</p>
+                            
+                            <p style="margin-top: 10px;"><strong>Hlavní vedoucí</strong></p>
+                            <p><i class="fas fa-phone"></i> +420 774 935 125</p>
+                            <p><i class="fas fa-envelope"></i> hajkovamarta.hm04@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3><i class="fas fa-building"></i> Kancelář farnosti</h3>
+                        <div class="contact-details">
+                            <p><i class="fas fa-clock"></i> Pondělí - Neděle: Mimo mše</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Římskokatolická farnost Nová Hradečná</p>
+                            <p><i class="fas fa-location-dot"></i> Nova Hradečná 2</p>
+                            <p><i class="fas fa-city"></i> 783 83 Troubelice</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Kontaktní formulář</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Jméno a příjmení</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Předmět</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Zpráva</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Odeslat zprávu</button>
+                    </form>
+                    
+                    <a href="#" class="btn btn-secondary" style="margin-top: 20px; display: inline-block;">Stáhnout přihlášku</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="logo">
+                        <img src="img/logo.png" alt="Farní Tábor Sobotín" class="logo-img">
+                        <span class="logo-text">Farní Tábor Sobotín</span>
+                    </div>
+                    <p>Letní tábor pro děti a mládež pořádaný farností Nová Hradečná. Vytváříme prostor pro setkání s Bohem i lidmi v krásném prostředí Jeseníků.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Rychlé odkazy</h3>
+                    <ul>
+                        <li><a href="#domu">Domů</a></li>
+                        <li><a href="#o-tabore">O táboře</a></li>
+                        <li><a href="#program">Program</a></li>
+                        <li><a href="#galerie">Galerie</a></li>
+                        <li><a href="#pro-rodice">Pro rodiče</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#kontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Farnost Nová Hradečná</h3>
+                    <ul>
+                        <li><a href="https://farnosthradecna.cz/" target="_blank"><i class="fas fa-globe"></i> Web farnosti</a></li>
+                        <li><a href="https://farnosthradecna.cz/fotogalerie" target="_blank"><i class="fas fa-images"></i> Fotogalerie</a></li>
+                        <li><a href="https://farnosthradecna.cz/kontakty" target="_blank"><i class="fas fa-map-marker-alt"></i> Kontakt na faru</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Farní Tábor Nová Hradečná. Všechna práva vyhrazena.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobilní menu
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Smooth scroll pro navigaci
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Zavření mobilního menu po kliknutí na odkaz
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+
+        // Header scroll efekt
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Formulář odeslání
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Děkujeme za vaši zprávu! Brzy vás budeme kontaktovat.');
+            this.reset();
+        });
+
+        // Scroll animace
+        function checkVisibility() {
+            const sections = document.querySelectorAll('section');
+            const items = document.querySelectorAll('.feature-item, .timeline-content, .gallery-item, .parents-info, .parents-checklist, .faq-item, .contact-info, .contact-form');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const sectionBottom = section.getBoundingClientRect().bottom;
+                
+                if (sectionTop < window.innerHeight - 100 && sectionBottom > 0) {
+                    section.classList.add('visible');
+                }
+            });
+            
+            items.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top;
+                const itemBottom = item.getBoundingClientRect().bottom;
+                
+                if (itemTop < window.innerHeight - 50 && itemBottom > 0) {
+                    item.classList.add('visible');
+                }
+            });
+            
+            // Speciální případ pro about-image
+            const aboutImage = document.querySelector('.about-image');
+            if (aboutImage) {
+                const aboutImageTop = aboutImage.getBoundingClientRect().top;
+                const aboutImageBottom = aboutImage.getBoundingClientRect().bottom;
+                
+                if (aboutImageTop < window.innerHeight - 50 && aboutImageBottom > 0) {
+                    aboutImage.classList.add('visible');
+                }
+            }
+        }
+        
+        // Spustit při načtení a při scrollování
+        window.addEventListener('load', checkVisibility);
+        window.addEventListener('scroll', checkVisibility);
+    </script>
+</body>
+</html>
